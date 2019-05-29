@@ -13,6 +13,11 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path:'/',
+      name:'index',
+      redirect:'/main'
+    },
    {path:'/main',name:'Main',component:Main,
       children:[
         {path:'/',name:'ShoppingMall',component:ShoppingMall},

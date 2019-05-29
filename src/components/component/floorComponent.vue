@@ -4,20 +4,20 @@
             <div class="floor-title">{{floorTitle}}</div>
             <div class="floor-anomaly">
                 <div class="floor-one">
-                    <img :src="floorData0.image" width="100%" />
+                    <img @click="$router.push(`/goods?goodsId=${floorData0.goodsId}`)" :src="floorData0.image" width="100%" />
                 </div>
                 <div>
                     <div class="floor-two">
-                         <img :src="floorData1.image" width="100%" />
+                         <img @click="$router.push(`/goods?goodsId=${floorData1.goodsId}`)" :src="floorData1.image" width="100%" />
                     </div>
                       <div>
-                         <img :src="floorData2.image" width="100%" />
+                         <img @click="$router.push(`/goods?goodsId=${floorData2.goodsId}`)" :src="floorData2.image" width="100%" />
                     </div>
                 </div>
             </div>
             <div class="floor-rule">
                 <div v-for="(item, index) in floorData.slice(3)" :key="index">
-                    <img :src="item.image" width="100%"/>
+                    <img :src="item.image" @click="$router.push(`/goods?goodsId=${item.goodsId}`)" width="100%"/>
                 </div>
             </div>
         </div>

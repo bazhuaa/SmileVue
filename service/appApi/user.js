@@ -23,6 +23,16 @@ router.post('/register',async(ctx)=>{
         }
     })
 })
+router.get('/userMsg',async(ctx)=>{
+    try{
+        let userName = ctx.request.body.userName
+        const user = mongoose.model('User')
+        let result = await user.findOne({userName:userName}).exec()
+        ctx.body={code:200,message:result}
+    }catch(error){
+        ctx.body={code:500,message:error}
+    }
+})
 
 router.post('/login',async(ctx)=>{
     let loginUser = ctx.request.body
@@ -39,7 +49,7 @@ router.post('/login',async(ctx)=>{
             let newUser = new User()
             await newUser.comparePassword(password,result.password)
             .then(isMatch=>{
-                ctx.body={code:200,message:isMatch}
+                ctx.body={code:200,message:result}
             })
             .catch(error=>{
                 console.log(error)

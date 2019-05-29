@@ -4,9 +4,10 @@
             <van-nav-bar title="购物车"/>
         </div>
         <div class="cart-title">
-            <van-button size="small"  type="danger" @click="clearCart" plain>
+            <van-button v-if="!isEmpty" size="small"  type="danger" @click="clearCart" plain>
                 清空购物车
             </van-button>
+            <span v-if="isEmpty">购物车是空的</span>
         </div>
         <!--显示购物车中的商品-->
         <div class="cart-list">
@@ -36,9 +37,12 @@
         
         <!--显示总金额-->
         
-        <div class="totalMoeny">
+        <div class="totalMoeny" v-if="!isEmpty">
             商品总价:￥{{totalMoney | moneyFilter}}
         </div>
+        <van-button v-if="!isEmpty" type="primary" @click="" style="float:right;margin-top:10px;" >
+            提交订单
+        </van-button>
 
     </div>
     
@@ -79,7 +83,7 @@
                     this.cartInfo=JSON.parse(localStorage.cartInfo)
                 } 
                 console.log(' this.cartInfo:'+JSON.stringify(this.cartInfo))
-                this.isEmpty=this.cartInfo.length>0 ?true : false
+                this.isEmpty=this.cartInfo.length>0 ?false : true
             
             },
             clearCart(){

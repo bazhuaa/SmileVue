@@ -17,13 +17,13 @@
         <div class="swiper-area">
             <van-swipe :autoplay="1000">
                 <van-swipe-item v-for="( banner ,index) in bannerPicArray" :key="index" >
-                    <img v-lazy="banner.image" width="100%"/>
+                    <img @click="$router.push('/goods?goodsId=3312d6a0f54c42bbb2e6cd316e289038')" v-lazy="banner.image" width="100%"/>
                 </van-swipe-item>
             </van-swipe>
         </div>  
         <!--type bar-->
         <div class="type-bar">
-            <div v-for="(cate,index) in category" :key="index">
+            <div v-for="(cate,index) in category" :key="index" @click="$router.push('/CategoryList')">
                 <img v-lazy="cate.image" width="90%">
                 <span>{{cate.mallCategoryName}}</span>
 
@@ -41,7 +41,7 @@
             <div class="recommend-body">
                 <swiper :options="swiperOption">
                    <swiper-slide v-for="(item,index) in recommendGoods " :key="index" >
-                       <div class="recommend-item">
+                       <div class="recommend-item" @click="$router.push(`/goods?goodsId=${item.goodsId}`)">
                            <img :src="item.image" width="80%">
                            <div>{{item.goodsName}}</div>
                            <div>￥{{item.price | moneyFilter}}(￥{{item.mallPrice  | moneyFilter}})</div>

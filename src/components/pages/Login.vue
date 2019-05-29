@@ -77,7 +77,7 @@
                  console.log(response) 
                 if(response.data.code==200 && response.data.message){
                     new Promise((resolve,reject)=>{
-                       localStorage.userInfo= {userName:this.username}
+                       localStorage.userInfo= JSON.stringify({userName:this.username})
                        setTimeout(()=>{resolve()},500)
                    }).then(()=>{
                         Toast.success('登录成功')
