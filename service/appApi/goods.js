@@ -157,6 +157,22 @@ router.post('/getGoodsListByCategorySubID',async(ctx)=>{
     }
     
 })
+/**搜索获取商品列表 */
+
+router.post('/searchGoods',async(ctx)=>{
+    try{
+        let keyword = ctx.request.body.keyword  //关键词
+        // let page = ctx.request.body.page  //当前页数
+        // let num = 10  //每页显示数量
+        // let start = (page-1)*num  //开始位置
+        const Goods = mongoose.model('Goods')
+        let result = await Goods.find({NAME:{$regex:keyword}}).exec()
+        ctx.body={code:200,message:result}
+    }catch(error){
+        ctx.body={code:500,message:error}
+    }
+    
+})
 
 
 

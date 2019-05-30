@@ -9,6 +9,7 @@ const userSchema = new Schema({
     UserId :{type:ObjectId},
     userName : {unique:true,type:String},
     password : String,
+    orderList: {type:Array, default:[]},
     createAt:{type:Date, default:Date.now()},
     lastLoginAt:{type:Date, default:Date.now()}
 },{

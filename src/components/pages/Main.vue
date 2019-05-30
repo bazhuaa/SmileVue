@@ -1,11 +1,13 @@
 <template>
     <div>
         <div class="main-div">
-            <keep-alive>
+            <keep-alive v-if="!whiteList.includes($route.name)">
                 <router-view />
             </keep-alive>
+            <router-view v-else/>
+
         </div>
-        <van-tabbar v-model="active" @change="changeTabbar(active)">
+        <van-tabbar v-model="active" @change="changeTabbar(active)" style="z-index:99">
             <van-tabbar-item icon="shop">首页</van-tabbar-item>
             <van-tabbar-item icon="records">列表</van-tabbar-item>
             <van-tabbar-item icon="cart">购物车</van-tabbar-item>
@@ -20,6 +22,9 @@
            return {
                active: 0,
                nowPath:'',  //当前路径
+               whiteList:[
+                   'Cart','goodsList','orderList'
+               ]
            }
        }, 
        created(){

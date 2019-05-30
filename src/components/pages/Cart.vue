@@ -36,11 +36,11 @@
         </div>
         
         <!--显示总金额-->
-        
         <div class="totalMoeny" v-if="!isEmpty">
             商品总价:￥{{totalMoney | moneyFilter}}
         </div>
-        <van-button v-if="!isEmpty" type="primary" @click="" style="float:right;margin-top:10px;" >
+
+        <van-button v-if="!isEmpty" type="primary" @click="addOrder" style="float:right;margin-top:10px;" >
             提交订单
         </van-button>
 
@@ -50,6 +50,9 @@
 
 <script>
     import { toMoney} from '@/filter/moneyFilter.js'
+    import { Dialog, Toast } from 'vant'
+    import axios from 'axios'
+    import url from '@/serviceAPI.config.js'
     export default {
        data() {
            return {
@@ -77,9 +80,26 @@
            }
        },
        methods: {
+           addOrder(){
+                let userName = JSON.parse(localStorage.userInfo).userName
+                let data = this.cartInfo.map(v=>v.name)
+                let goods = JSON.stringify({data})
+                axios({
+                    url:url.addUserOrders,
+                    method:'post',
+                    data:{userName,goods}
+                    }).then(res=>{
+                    if(res.data.code==200&&res.data.message){
+                        Toast.success('提交成功')
+                        this.cartInfo=[]
+                    }else{
+                        Toast.fail('提交失败')
+                    }
+                })
+           },
             //得到购物车数据的方法
             getCartInfo() { 
-                if(localStorage.cartInfo){
+                if(localStorage.cartInfo&&localStorage.userInfo){
                     this.cartInfo=JSON.parse(localStorage.cartInfo)
                 } 
                 console.log(' this.cartInfo:'+JSON.stringify(this.cartInfo))
@@ -87,6 +107,7 @@
             
             },
             clearCart(){
+                
                 localStorage.removeItem('cartInfo')
                 this.cartInfo=[]
             }

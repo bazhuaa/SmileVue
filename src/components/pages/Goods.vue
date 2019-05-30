@@ -33,7 +33,7 @@
                 <van-button size="large" type="primary" @click="addGoodsToCart">加入购物车</van-button>
             </div>
             <div>
-                <van-button size="large" type="danger">直接购买</van-button>
+                <van-button size="large" type="danger" @click="addOrder">直接购买</van-button>
             </div>
         </div>
 
@@ -86,6 +86,10 @@
                 this.$router.go(-1)
             },
             addGoodsToCart(){
+                if(!localStorage.userInfo){
+                    Toast.fail('请登陆')
+                    return
+                }
                 //取出本地购物车中的商品
                 //localStorage.removeItem('cartInfo')
                 let cartInfo = localStorage.cartInfo ? JSON.parse(localStorage.cartInfo) : []
@@ -109,6 +113,23 @@
 
                 this.$router.push({name:'Cart'})
 
+            },
+            addOrder(){
+                let userName = JSON.parse(localStorage.userInfo).userName
+                let data = [this.goodsInfo.NAME]
+                let goods = JSON.stringify({data})
+                axios({
+                    url:url.addUserOrders,
+                    method:'post',
+                    data:{userName,goods}
+                    }).then(res=>{
+                    if(res.data.code==200&&res.data.message){
+                        Toast.success('提交订单成功')
+                    }else{
+                        Toast.fail('提交订单失败')
+                    }
+                })
+            
             }
         
         },

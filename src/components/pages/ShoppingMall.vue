@@ -6,10 +6,10 @@
                     <img :src="locationIcon" width="80%" class="location-icon"/>
                 </van-col>
                 <van-col span="16">
-                    <input type="text" class="search-input" />
+                    <input type="text" v-model="keyword" class="search-input" />
                 </van-col>
                 <van-col span="5">
-                    <van-button size="mini">查找</van-button>
+                    <van-button size="mini" @click="search">搜索</van-button>
                 </van-col>
             </van-row>
         </div>
@@ -88,6 +88,7 @@
     export default {
         data() {
             return {
+                keyword:'',
                 swiperOption:{
                     slidesPerView:3
                 },
@@ -108,6 +109,12 @@
         filters:{
             moneyFilter(money){
                 return toMoney(money)
+            }
+        },
+        methods:{
+            search(){
+                if(this.keyword)
+                this.$router.push(`/goodsList?keyword=${this.keyword}`)
             }
         },
         components:{swiper,swiperSlide,floorComponent,goodsInfo},

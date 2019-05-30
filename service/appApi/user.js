@@ -33,7 +33,47 @@ router.get('/userMsg',async(ctx)=>{
         ctx.body={code:500,message:error}
     }
 })
+// 订单
+router.post('/getUserOrders',async(ctx)=>{
+    try{
+        let userName = ctx.request.body.userName
+        const user = mongoose.model('User')
+        let result = await user.findOne({userName:userName}).exec()
+        ctx.body={code:200,message:result.orderList}
+    }catch(error){
+        ctx.body={code:500,message:error}
+    }
+})
+// 删除
+router.post('/delUserOrders',async(ctx)=>{
+    try{
+        let userName = ctx.request.body.userName
+        let id = ctx.request.body.id*1
+        const user = mongoose.model('User')
+        let result = await user.update({userName:userName},{$pull:{orderList:{id:id}}})
+        ctx.body={code:200,message:result}
+    }catch(error){
+        ctx.body={code:500,message:error}
+    }
+})
+// 添加订单
+router.post('/addUserOrders',async(ctx)=>{
+    console.log(ctx.request.body)
 
+    try{
+        
+        let userName = ctx.request.body.userName
+        let goods = JSON.parse(ctx.request.body.goods).data
+        let date = new Date()
+        let dateStr = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+'订单'
+        let id = parseInt( Math.random()*10000000)
+        const user = mongoose.model('User')
+        let result = await user.update({userName: userName}, {$addToSet:{orderList:{id:id,name:dateStr,goods:goods}}});
+        ctx.body={code:200,message:'添加成功'}
+    }catch(error){
+        ctx.body={code:500,message:error}
+    }
+})
 router.post('/login',async(ctx)=>{
     let loginUser = ctx.request.body
     console.log(loginUser)
@@ -56,7 +96,7 @@ router.post('/login',async(ctx)=>{
                 ctx.body={code:500,message:error}
             })
         }else{
-            ctx.body={code:200,message:'用户名不存在'}
+            ctx.body={code:400,message:'用户名不存在'}
         }
     }).catch(error=>{
         console.log(error)

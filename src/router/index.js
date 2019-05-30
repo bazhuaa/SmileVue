@@ -8,10 +8,13 @@ import CategoryList from '@/components/pages/CategoryList'
 import Cart from '@/components/pages/Cart'
 import Main from '@/components/pages/Main'
 import Member from '@/components/pages/Member'
+import goodsList from '@/components/pages/goodsList'
+import orderList from '@/components/pages/orderList'
 
 Vue.use(Router)
 
 export default new Router({
+  mode:'hash',
   routes: [
     {
       path:'/',
@@ -24,6 +27,8 @@ export default new Router({
         {path:'/CategoryList',name:'CategoryList',component:CategoryList},
         {path:'/Cart',name:'Cart',component:Cart},
         {path:'/Member',name:'Member',component:Member},
+        {path:'/goodsList',name:'goodsList',component:goodsList},
+        {path:'/orderList',name:'orderList',component:orderList}
       ]
    },
   
