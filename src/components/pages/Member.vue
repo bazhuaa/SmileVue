@@ -11,7 +11,7 @@
         <div class="login">
             <div v-if="!isLogin"><van-button  type="primary" @click="$router.push('/login')">我要登录</van-button></div>
             <div v-if="!isLogin"><van-button type="primary" @click="$router.push('/register')">我要注册</van-button></div>
-            <div v-if="!isLogin"><van-button type="info" @click="insertData">导入数据</van-button></div>
+            <!-- <div v-if="!isLogin"><van-button type="info" @click="insertData">导入数据</van-button></div> -->
         </div>
         <div>
             <van-cell-group style="text-align:center;">

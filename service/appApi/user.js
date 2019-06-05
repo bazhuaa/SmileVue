@@ -89,7 +89,11 @@ router.post('/login',async(ctx)=>{
             let newUser = new User()
             await newUser.comparePassword(password,result.password)
             .then(isMatch=>{
-                ctx.body={code:200,message:result}
+                if(isMatch){
+                    ctx.body={code:200,message:result}
+                }else{
+                    ctx.body={code:400,message:'密码错误'}
+                }
             })
             .catch(error=>{
                 console.log(error)
